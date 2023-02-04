@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  api:
+    image: gcr.io/technocultureresearch/saliva-qa-api/api:latest
+    build:
+      context: api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/usr/src/api
+
+  app:
+    image: gcr.io/technocultureresearch/salivaqa/app:latest
+    build:
+      context: ./salivaqa
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./salivaqa/:/usr/src/app
+    depends_on:
+      - api
